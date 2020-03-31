@@ -21,9 +21,14 @@ export default {
     };
   },
   methods: {
-      save(){
-          this.$http.post();
-      }
+    async save() {
+      await this.$http.post("categories", this.model);
+      this.$message({
+        type: 'success',
+        message: "保存成功"
+      });
+      this.$router.push('categories/list')
+    }
   },
   components: {}
 };

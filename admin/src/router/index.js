@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
 import CategoriesEdit from '../views/CategoriesEdit'
+import CategoriesList from '../views/CategoriesList'
 
 Vue.use(VueRouter)
 
@@ -18,8 +19,8 @@ const routes = [
       },
       {
         path: '/categories/list',
-        name: 'CategoriesEdit',
-        component: CategoriesEdit
+        name: 'CategoriesList',
+        component: CategoriesList
       }
     ]
   },
