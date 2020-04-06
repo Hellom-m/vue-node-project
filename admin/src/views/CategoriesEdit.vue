@@ -34,10 +34,10 @@ export default {
     async save() {
       if (this.id) {
         // 编辑修改
-        await this.$http.put(`categories/${this.id}`, this.model);
+        await this.$http.put(`rest/categories/${this.id}`, this.model);
       } else {
         // 新建
-        await this.$http.post("categories", this.model);
+        await this.$http.post("rest/categories", this.model);
       }
       this.$message({
         type: "success",
@@ -48,13 +48,13 @@ export default {
 
     // 编辑获取详情
     fetch() {
-      this.$http.get(`categories/${this.id}`).then(res => {
+      this.$http.get(`rest/categories/${this.id}`).then(res => {
         this.model = res.data;
       });
     },
 
     getParents() {
-      this.$http.get("categories").then(res => {
+      this.$http.get("rest/categories").then(res => {
         this.parents = res.data;
       });
     }

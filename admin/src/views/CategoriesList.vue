@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     fetch() {
-      this.$http.get("/categories").then(res => {
+      this.$http.get("rest/categories").then(res => {
         console.log(res);
         this.items = res.data;
       });
@@ -41,7 +41,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(async () => {
-        await this.$http.delete(`/categories/${e._id}`)
+        await this.$http.delete(`rest/categories/${e._id}`)
         this.$message({
           type: "success",
           message: "删除成功!"
