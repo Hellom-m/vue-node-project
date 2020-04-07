@@ -4,6 +4,17 @@ import Main from '../views/Main.vue'
 import CategoriesEdit from '../views/CategoriesEdit'
 import CategoriesList from '../views/CategoriesList'
 
+import ItemEdit from '../views/ItemEdit'
+import ItemList from '../views/ItemList'
+
+import HeroesEdit from '../views/HeroesEdit'
+import HeroesList from '../views/HeroesList'
+
+import ArticleEdit from '../views/ArticleEdit'
+import ArticleList from '../views/ArticleList'
+
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -26,6 +37,50 @@ const routes = [
         path: '/categories/list',
         // name: 'CategoriesList',
         component: CategoriesList
+      },
+      {
+        path: '/items/create',
+        component: ItemEdit
+      },
+      {
+        path: '/items/edit/:id',
+        component: ItemEdit,
+        props: true
+      },
+      {
+        path: '/items/list',
+        // name: 'CategoriesList',
+        component: ItemList
+      },
+      {
+        path: '/heroes/create',
+        // name: 'CategoriesEdit',
+        component: HeroesEdit
+      },
+      {
+        path: '/heroes/edit/:id',
+        component: HeroesEdit,
+        props: true
+      },
+      {
+        path: '/heroes/list',
+        // name: 'CategoriesList',
+        component: HeroesList
+      },
+      {
+        path: '/articles/create',
+        // name: 'CategoriesEdit',
+        component: ArticleEdit
+      },
+      {
+        path: '/articles/edit/:id',
+        component: ArticleEdit,
+        props: true
+      },
+      {
+        path: '/articles/list',
+        // name: 'CategoriesList',
+        component: ArticleList
       }
     ]
   },

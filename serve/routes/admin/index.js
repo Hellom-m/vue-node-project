@@ -1,9 +1,9 @@
-// 建立通用的CRUD组件路由
 module.exports = app => {
+    // 建立通用的CRUD组件路由
     const express = require('express');
-   /**
-    *   mergeParams: 保存来自上一个路由的res.params的值，如果当前路由的值和上一个路由的值冲突则会覆盖上一个值。
-    */
+    /**
+     *   mergeParams: 保存来自上一个路由的res.params的值，如果当前路由的值和上一个路由的值冲突则会覆盖上一个值。
+     */
     const router = express.Router({
         mergeParams: true
     });
@@ -25,7 +25,7 @@ module.exports = app => {
         /**
          * @description 获取关联的 parent
          * populate函数（联表）：在文档中引用另一个集合的文档，并将齐填充到文档的指定路径中
-         */ 
+         */
         let queryOptions = {};
         if (req.Model.modelName === 'Category') {
             queryOptions.populate = 'parent'
@@ -36,7 +36,7 @@ module.exports = app => {
 
     // 获取分类详情
     router.get('/:id', async (req, res) => {
-        const data = await req.Model.modeName.findById(req.params.id);
+        const data = await req.Model.findById(req.params.id);
         res.send(data);
     })
 
@@ -62,4 +62,18 @@ module.exports = app => {
         // 然后在执行下一步
         next()
     }, router);
+
+    // 图片上传接口
+    // multer: 用于获取上传数据的中间件
+    const multer = require('multer');
+    /**
+     * multer(): 执行 multer 方法并把上传后的图片 指定放在 uploads文件夹中
+     * __dirname: 指向被执行js文件的绝对路径
+     */
+    const upload = multer({ dest: __dirname + '/../../uploads' })
+    app.post('/admin/api/upload', upload.single('file'), async (req, res) => {
+        const file = req.file;
+        file.url = `http://localhost:3000/uploads/${file.filename}`
+        res.send(file);
+    })
 }
