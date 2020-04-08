@@ -16,6 +16,7 @@
 12. 技能的编辑
 13. 文章的管理
 14. 富文本编辑器（quill  [vue2-editor](https://www.npmjs.com/package/vue2-editor)）
+15. 广告管理
 
 
 
