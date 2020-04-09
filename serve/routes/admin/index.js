@@ -7,6 +7,10 @@ module.exports = app => {
     const router = express.Router({
         mergeParams: true
     });
+    // 引入 管理员 模型
+    const AdminUser = require('../../model/AdminUser');
+    // 引入 生成 token 的包
+    const jwt = require('jsonwebtoken');
 
     // 新建分类
     router.post('/', async (req, res) => {
@@ -21,7 +25,16 @@ module.exports = app => {
     })
 
     // 获取分类列表
-    router.get('/', async (req, res) => {
+    router.get('/', async (req, res, next) => {
+        // 获取 token
+        const token = String(req.headers.authorization || '').split(' ').pop();
+        // 解密 token 中的数据
+        const { id } = jwt.verify(token, app.get('secret'))
+        req.user = await AdminUser.findById(id)
+        console.log(req.user);
+
+        await next()
+    }, async (req, res) => {
         /**
          * @description 获取关联的 parent
          * populate函数（联表）：在文档中引用另一个集合的文档，并将齐填充到文档的指定路径中
@@ -75,5 +88,42 @@ module.exports = app => {
         const file = req.file;
         file.url = `http://localhost:3000/uploads/${file.filename}`
         res.send(file);
+    })
+
+
+    //登录接口
+    app.post('/admin/api/login', async (req, res) => {
+        const { username, password } = req.body;
+        //1. 根据用户名找用户
+
+        /**
+         * .select() => 前缀 - 被排除，前缀 + 被强制选择
+         */
+        const user = await AdminUser.findOne({ username }).select('+password');
+        if (!user) {
+            return res.status(422).send({
+                message: '用户不存在'
+            })
+        }
+
+        //2. 校验密码
+        const isVaild = require('bcrypt').compareSync(password, user.password)
+        if (!isVaild) {
+            return res.status(422).send({
+                message: '密码错误'
+            })
+        }
+
+        /**
+         * @description 3. 返回token
+         * @function jwt.sign(): 接受两个参数 1. 需要放在token里面的数据
+         *                        2. 根据 秘钥 校验客户端是否篡改
+         * 
+         * app.get('secret') => 1. 传一个参数是获取配置变量的值
+         *                      2. 传两个参数是获取路由
+         */
+
+        const token = jwt.sign({ id: user._id }, app.get('secret'));
+        res.send({ token })
     })
 }

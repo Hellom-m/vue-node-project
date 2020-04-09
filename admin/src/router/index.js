@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
+import Login from '../views/Login.vue'
 import CategoriesEdit from '../views/CategoriesEdit'
 import CategoriesList from '../views/CategoriesList'
 
@@ -16,11 +17,18 @@ import ArticleList from '../views/ArticleList'
 import AdsEdit from '../views/AdsEdit'
 import AdsList from '../views/AdsList'
 
+import AdminUsersEdit from '../views/AdminUsersEdit'
+import AdminUsersList from '../views/AdminUsersList'
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
   {
     path: '/',
     name: 'Main',
@@ -99,6 +107,21 @@ const routes = [
         path: '/ads/list',
         // name: 'CategoriesList',
         component: AdsList
+      },
+      {
+        path: '/admin_users/create',
+        // name: 'CategoriesEdit',
+        component: AdminUsersEdit
+      },
+      {
+        path: '/admin_users/edit/:id',
+        component: AdminUsersEdit,
+        props: true
+      },
+      {
+        path: '/admin_users/list',
+        // name: 'CategoriesList',
+        component: AdminUsersList
       }
     ]
   },

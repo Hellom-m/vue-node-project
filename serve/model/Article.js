@@ -1,4 +1,4 @@
-// 建立 英雄模型
+// 建立 文章模型
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
