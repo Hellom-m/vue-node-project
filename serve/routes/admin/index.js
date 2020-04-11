@@ -7,10 +7,14 @@ module.exports = app => {
     const router = express.Router({
         mergeParams: true
     });
+
+
     // 引入 管理员 模型
     const AdminUser = require('../../model/AdminUser');
     // 引入 生成 token 的包
     const jwt = require('jsonwebtoken');
+    // 引入 http 全局错误提示
+    const assert = require('http-assert')
 
     // 新建分类
     router.post('/', async (req, res) => {
@@ -25,16 +29,7 @@ module.exports = app => {
     })
 
     // 获取分类列表
-    router.get('/', async (req, res, next) => {
-        // 获取 token
-        const token = String(req.headers.authorization || '').split(' ').pop();
-        // 解密 token 中的数据
-        const { id } = jwt.verify(token, app.get('secret'))
-        req.user = await AdminUser.findById(id)
-        console.log(req.user);
-
-        await next()
-    }, async (req, res) => {
+    router.get('/', async (req, res) => {
         /**
          * @description 获取关联的 parent
          * populate函数（联表）：在文档中引用另一个集合的文档，并将齐填充到文档的指定路径中
@@ -61,20 +56,17 @@ module.exports = app => {
         });
     })
 
+    // 登录校验中间件
+    const authMiddleWare = require('../../middleware/auth');
+
+    // model 来源中间件
+    const resourceMiddleWare = require('../../middleware/resource');
+
     /**
      * app.use(path,callback)中的 callback 既可以是 router 对象也可以是函数
      * async函数：自定义中间件，用于引入通用的模型
      */
-    app.use('/admin/api/rest/:resource', async (req, res, next) => {
-        // 使用 inflection 将客户端调用的接口地址参数 转换为大写 Model 的值 categories => Category
-        const modelName = require('inflection').classify(req.params.resource);
-
-        // 将引用的 Model 挂载在 req 上，便于 router 中使用
-        req.Model = require(`../../model/${modelName}`);
-
-        // 然后在执行下一步
-        next()
-    }, router);
+    app.use('/admin/api/rest/:resource', authMiddleWare(), resourceMiddleWare(), router);
 
     // 图片上传接口
     // multer: 用于获取上传数据的中间件
@@ -84,7 +76,7 @@ module.exports = app => {
      * __dirname: 指向被执行js文件的绝对路径
      */
     const upload = multer({ dest: __dirname + '/../../uploads' })
-    app.post('/admin/api/upload', upload.single('file'), async (req, res) => {
+    app.post('/admin/api/upload', authMiddleWare(), upload.single('file'), async (req, res) => {
         const file = req.file;
         file.url = `http://localhost:3000/uploads/${file.filename}`
         res.send(file);
@@ -100,19 +92,12 @@ module.exports = app => {
          * .select() => 前缀 - 被排除，前缀 + 被强制选择
          */
         const user = await AdminUser.findOne({ username }).select('+password');
-        if (!user) {
-            return res.status(422).send({
-                message: '用户不存在'
-            })
-        }
+        assert(user, 422, "用户不存在");
 
         //2. 校验密码
         const isVaild = require('bcrypt').compareSync(password, user.password)
-        if (!isVaild) {
-            return res.status(422).send({
-                message: '密码错误'
-            })
-        }
+
+        assert(isVaild, 422, "密码错误");
 
         /**
          * @description 3. 返回token
@@ -125,5 +110,13 @@ module.exports = app => {
 
         const token = jwt.sign({ id: user._id }, app.get('secret'));
         res.send({ token })
+    })
+
+    // 错误处理函数
+    app.use(async (err, req, res, next) => {
+        console.log(err);
+        res.status(err.status).send({
+            message: err.message
+        })
     })
 }

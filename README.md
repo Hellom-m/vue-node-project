@@ -16,8 +16,12 @@
 12. 技能的编辑
 13. 文章的管理
 14. 富文本编辑器（quill  [vue2-editor](https://www.npmjs.com/package/vue2-editor)）
-15. 广告管理
-
+15. 首页广告管理
+16. 管理员账号管理 （bcrypt）
+17. 首页登录
+18. 登录接口（jsonwebtoken）
+19. 服务端登录校验
+20. 客户端路由限制（beforeEach,meta）
 
 
 ## serve
