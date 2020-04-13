@@ -1,0 +1,136 @@
+@import './variables.scss';
+
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+html {
+    font-size: 13px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+// colors
+@each $colorKey,
+$color in $colors {
+    .text-#{$colorKey} {
+        color: $color !important;
+    }
+
+    .bg-#{$colorKey} {
+        background-color: $color !important;
+    }
+}
+
+
+// text-align
+@each $var in (left, center, right) {
+    .text-#{$var} {
+        text-align: $var !important;
+    }
+}
+
+// font size
+@each $sizeKey,
+$size in $font-sizes {
+    .fs-#{$sizeKey} {
+        font-size: $size * $base-font-size;
+    }
+}
+
+// flex
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+// flex justify-content
+@each $key,
+$value in $flex-jc {
+    .jc-#{$key} {
+        justify-content: $value;
+    }
+}
+
+// flex aligin-item
+@each $key,
+$value in $flex-ai {
+    .ai-#{$key} {
+        align-items: $value;
+    }
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+
+// spacing
+@each $typeKey,
+$type in $spacing-types {
+
+    // .m-1
+    @each $sizingKey,
+    $sizing in $spacing-sizing {
+
+        .#{$typeKey}-#{$sizingKey} {
+
+            #{$type}: $sizing * $spacing-base-size;
+        }
+    }
+
+    // .mx-1  .my-1
+    @each $sizingKey,
+    $sizing in $spacing-sizing {
+
+        .#{$typeKey}x-#{$sizingKey} {
+
+            #{$type}-left: $sizing * $spacing-base-size;
+            #{$type}-right: $sizing * $spacing-base-size;
+        }
+
+        .#{$typeKey}y-#{$sizingKey} {
+
+            #{$type}-top: $sizing * $spacing-base-size;
+            #{$type}-bottom: $sizing * $spacing-base-size;
+        }
+    }
+
+    // .mt-1 { margin-top: 0.25 }
+    @each $dirKey,
+    $dir in $spacing-directions {
+
+        @each $sizingKey,
+        $sizing in $spacing-sizing {
+
+            .#{$typeKey}#{$dirKey}-#{$sizingKey} {
+
+                #{$type}-#{$dir}: $sizing * $spacing-base-size
+            }
+        }
+    }
+}
+
+// button
+.btn {
+    border: none;
+    border-radius: 0.1538rem;
+    font-size: map-get($map: $font-sizes, $key: 'sm') * $base-font-size;
+    padding: 0.2rem 0.6rem;
+}
+
+// width height
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}

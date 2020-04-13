@@ -1,0 +1,53 @@
+// colors
+$colors:("priamry":#db9e3f,
+    "white":#fff,
+    "dark": #000,
+    "dark-1":#666,
+    "red":#e74c3c,
+    "info":#4b67af,
+);
+
+// font size
+$base-font-size: 1rem;
+
+$font-sizes:(xxs:0.6154,
+    xs:0.7692, //10px
+    sm:0.9231, //12px
+    md:1, //13px
+    lg:1.0769, //14px
+    xl:1.2308, //16px
+);
+
+
+// flex justify-content
+$flex-jc:(start:flex-start,
+    end: flex-end,
+    center:center,
+    between:space-between,
+    around:space-around);
+
+// flex aligin-item
+$flex-ai:(start:flex-start,
+    end: flex-end,
+    center:center,
+    baseline:baseline,
+    stretch:stretch);
+
+// spacing
+// 定义边距 0-5级
+// .mt-1 => margin-top
+$spacing-types:(m: margin,
+    p: padding);
+
+// 定义方向
+$spacing-directions:(t:top, r:right, b:bottom, l:left);
+// 定义基础尺寸
+$spacing-base-size:1rem;
+
+// 定义倍数
+$spacing-sizing:(0:0,
+    1:0.25,
+    2:0.5,
+    3:1,
+    4:1.5,
+    5:3)
