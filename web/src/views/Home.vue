@@ -12,6 +12,25 @@
       </swiper-slide>
       <div class="swiper-pagination pagination-home text-right px-3 pb-2" slot="pagination"></div>
     </swiper>
+
+    <!-- end of swiper -->
+
+    <div class="nav-icons bg-white mt-3 pt-3 text-center">
+      <div class="d-flex flex-wrap">
+        <div class="nav-item mb-3" v-for="n in 10" :key="n">
+          <i class="sprite news"></i>
+          <div class="py-2">爆料站</div>
+        </div>
+      </div>
+      <div class="bg-light-1 py-2 fs-sm ">
+        <i class="sprite arrow"></i>
+        <span class="mx-2">收起</span>
+      </div>
+    </div>
+
+    <!-- end of nav icons -->
+
+    
   </div>
 </template>
 
@@ -24,7 +43,7 @@ export default {
         pagination: {
           el: ".pagination-home"
         },
-        autoplay:true
+        autoplay: true
       }
     };
   },
@@ -33,16 +52,30 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/sass/_variables';
+@import "../assets/sass/_variables";
 
 .pagination-home {
   .swiper-pagination-bullet {
     opacity: 1;
     border-radius: 0.1538rem;
-    background: map-get($map: $colors, $key: 'white');
+    background: map-get($map: $colors, $key: "white");
 
-    &.swiper-pagination-bullet-active{
-      background: map-get($map: $colors, $key: 'info');
+    &.swiper-pagination-bullet-active {
+      background: map-get($map: $colors, $key: "info");
+    }
+  }
+}
+
+.nav-icons {
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+
+  .nav-item {
+    width: 25%;
+    text-align: center;
+    border-right: 1px solid $border-color;
+    &:nth-child(4n) {
+      border-right: 0;
     }
   }
 }

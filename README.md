@@ -27,3 +27,13 @@
 ## serve
 
 node.js + mongodb
+
+
+## web
+
+### 1. 安装 sass
+
+`npm i -d sass sass-loader`
+
+
+### 2. 计算[雪碧图](http://www.spritecow.com/)定位的网站
