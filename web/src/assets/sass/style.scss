@@ -164,3 +164,25 @@ $type in $spacing-types {
         height: 0.7692rem;
     }
 }
+
+.nav {
+    .nav-item {
+        border-bottom: 3px solid transparent;
+        padding-bottom: 0.2rem;
+
+        &.active {
+            color: map-get($map: $colors, $key: 'priamry');
+            border-bottom: 3px solid map-get($map: $colors, $key: 'priamry');
+        }
+    }
+
+    &.nav-inserve {
+        .nav-item {
+            color: map-get($map: $colors, $key: 'white');
+            &.active {
+                border-bottom: 3px solid map-get($map: $colors, $key: 'white');
+            }
+        }
+
+    }
+}

@@ -22,7 +22,7 @@
           <div class="py-2">爆料站</div>
         </div>
       </div>
-      <div class="bg-light-1 py-2 fs-sm ">
+      <div class="bg-light-1 py-2 fs-sm">
         <i class="sprite arrow"></i>
         <span class="mx-2">收起</span>
       </div>
@@ -30,18 +30,21 @@
 
     <!-- end of nav icons -->
 
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
-    <p>dfdsfsfs</p>
+    <list-card icon="menu1" title="新闻资讯" :categories="newsCats">
+      <template #items="{category}">
+        <div class="py-2" v-for="(item,i) in category.newList" :key="i">
+          <span>[{{item.categoryName}}]</span> |
+          <span>{{item.title}}</span>
+          <span>{{item.date}}</span>
+        </div>
+      </template>
+    </list-card>
 
+    <!-- <m-card icon="menu1" title="新闻资讯">
+      sdfsdfsd
+    </m-card>
 
-    
+    <m-card></m-card>-->
   </div>
 </template>
 
@@ -55,7 +58,36 @@ export default {
           el: ".pagination-home"
         },
         autoplay: true
-      }
+      },
+      newsCats: [
+        {
+          name: "热门",
+          newList: new Array(5).fill(1).map(v => ({
+            id: v,
+            categoryName: "公告",
+            title: "夏日新版本“稷下星之队”即将六月上线",
+            date: "06/01"
+          }))
+        },
+        {
+          name: "新闻",
+          newList: new Array(5).fill(1).map(v => ({
+            id: v,
+            categoryName: "新闻",
+            title: "夏日新版本“稷下星之队”即将六月上线",
+            date: "06/01"
+          }))
+        },
+        {
+          name: "热门",
+          newList: new Array(5).fill(1).map(v => ({
+            id: v,
+            categoryName: "公告",
+            title: "夏日新版本“稷下星之队”即将六月上线",
+            date: "06/01"
+          }))
+        }
+      ]
     };
   },
   components: {}

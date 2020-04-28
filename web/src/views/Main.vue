@@ -9,7 +9,7 @@
       <button type="button" class="btn bg-priamry">立即下载</button>
     </div>
     <div class="bg-priamry pt-3 pb-2">
-      <div class="nav text-white d-flex jc-around pb-1">
+      <div class="nav nav-inserve text-white d-flex jc-around pb-1">
         <div class="nav-item active">
           <router-link tag="div" to="/">首页</router-link>
         </div>
@@ -39,16 +39,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav {
-  .nav-item {
-    border-bottom: 3px solid transparent;
-    padding-bottom: 0.2rem;
-    &.active {
-      border-bottom: 3px solid #fff;
-    }
-  }
-}
-
 .topbar {
   position: sticky;
   top: 0;
